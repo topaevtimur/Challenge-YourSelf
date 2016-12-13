@@ -25,7 +25,15 @@ public class HomeActivity extends AppCompatActivity {
             }
         });
 
-        Button calendar_btn = (Button) findViewById(R.id.calendar);
+        Button calendar_btn = (Button) findViewById(R.id.calendar_btn);
+        calendar_btn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                save();
+                Intent intent = new Intent(HomeActivity.this, CalendarActivity.class);
+                startActivity(intent);
+            }
+        });
         Button challenges_btn = (Button) findViewById(R.id.challenges);
         Button editor_btn = (Button) findViewById(R.id.editor);
     }

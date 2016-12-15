@@ -6,6 +6,9 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 
+import v.challengeyourself.storage.ChallengeStorage;
+import v.challengeyourself.storage.DBHelper;
+
 public class HomeActivity extends AppCompatActivity {
 
     void save() {}
@@ -34,7 +37,16 @@ public class HomeActivity extends AppCompatActivity {
                 startActivity(intent);
             }
         });
-        Button challenges_btn = (Button) findViewById(R.id.challenges);
+
         Button editor_btn = (Button) findViewById(R.id.editor);
+        editor_btn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                save();
+                Intent intent = new Intent(HomeActivity.this, EditorActivity.class);
+                startActivity(intent);
+            }
+        });
+        Button challenges_btn = (Button) findViewById(R.id.challenges);
     }
 }

@@ -14,15 +14,15 @@ public class Challenge {
     public String challenge;
     public String details;
     public long deadLine;
-    public int done;
+    public int closed;
 
-    public Challenge (String start, String deadDate, String deadTime, String chall, String details, long deadLine, int done) {
+    public Challenge (String start, String deadDate, String deadTime, String chall, String details, long deadLine, int closed) {
         this.start = start;
         this.deadDate = deadDate;
         this.deadTime = deadTime;
         this.challenge = chall;
         this.details = details;
         this.deadLine = deadLine;
-        this.done = done;
+        this.closed = closed;
     }
 }

@@ -2,6 +2,7 @@ package v.challengeyourself;
 
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.View;
@@ -16,6 +17,9 @@ import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 
+import v.challengeyourself.storage.ChallengesGetter;
+import v.challengeyourself.utils.RecyclerDividersDecorator;
+
 import static v.challengeyourself.R.id.first_name;
 
 /**
@@ -28,6 +32,7 @@ public class ProfileActivity extends AppCompatActivity {
     Button edit_button, save_button;
     private static final String TAG = "myLogs";
     private String profile_file = "profile";
+    private RecyclerView challengesRecyclerView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -89,8 +94,19 @@ public class ProfileActivity extends AppCompatActivity {
             }
         });
 
+        challengesRecyclerView = (RecyclerView) findViewById(R.id.calendar_challenges_recycler);
+        challengesRecyclerView.setLayoutManager(new LinearLayoutManager(this));
+        challengesRecyclerView.addItemDecoration(
+                new RecyclerDividersDecorator(getResources().getColor(R.color.colorPrimaryDark)));
+
+    //    setAdapter();
 
     }
+
+/*    private void setAdapter() {
+        challengesRecyclerView.setVisibility(View.VISIBLE);
+    }
+*/
     private void showDisplay(boolean flag){
         for (int i = 0; i < 5; i++) {
             editText[i].setFocusableInTouchMode(flag);

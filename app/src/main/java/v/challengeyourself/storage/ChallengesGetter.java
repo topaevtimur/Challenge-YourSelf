@@ -34,7 +34,7 @@ public class ChallengesGetter {
                 Columns.TABLE_NAME,
                 Columns.allArgs,
                 Columns.DEADDATE + "=? AND " +
-                Columns.DONE + "=?",
+                Columns.CLOSED + "=?",
                 new String[] {DATE_FORMAT.format(date.getTime()), String.valueOf(0)},
                 null, null, null);
 

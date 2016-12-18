@@ -87,8 +87,6 @@ public class EditorActivity extends AppCompatActivity {
         timePickerDialog = new TimePickerDialog(this, new TimePickerDialog.OnTimeSetListener() {
             @Override
             public void onTimeSet(TimePicker view, int hourOfDay, int minute) {
-                Calendar newTime = Calendar.getInstance();
-                newTime.set(hourOfDay, minute);
                 full.set(Calendar.HOUR_OF_DAY, hourOfDay);
                 full.set(Calendar.MINUTE, minute);
                 getTime.setText(hourOfDay + ":" + minute);
@@ -121,7 +119,7 @@ public class EditorActivity extends AppCompatActivity {
                 + ", deadLine(time in millis) " + newch.deadLine
                 + ", done? " + newch.done);
         storage.put(newch);
-        storage.showStorage();
+        //storage.showStorage();
+        storage.sortByDeadLines();
     }
-
 }

@@ -25,6 +25,9 @@
         <activity
             android:name=".EditorActivity">
         </activity>
+        <activity
+            android:name=".ChallengeActivity">
+        </activity>
     </application>
 
 </manifest>

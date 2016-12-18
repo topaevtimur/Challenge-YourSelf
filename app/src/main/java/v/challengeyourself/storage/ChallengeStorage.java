@@ -6,7 +6,7 @@ import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteStatement;
 import android.util.Log;
 
-import v.challengeyourself.Challenge;
+import v.challengeyourself.model.Challenge;
 
 import static v.challengeyourself.storage.DBContract.Columns.*;
 

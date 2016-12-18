@@ -37,7 +37,7 @@ public class ChallengeStorage {
                 DBContract.Columns.TABLE_NAME,
                 DBContract.Columns.allArgs,
                 DBContract.Columns.DEADDATE + "=? AND " +
-                        DBContract.Columns.DONE + "=?",
+                        DBContract.Columns.CLOSED + "=?",
                 new String[] {DATE_FORMAT.format(date.getTime()), String.valueOf(0)},
                 null, null, null);
 
@@ -75,7 +75,6 @@ public class ChallengeStorage {
 
     public void put(Challenge newch) {
         db = dbHelper.getWritableDatabase();
-
         db.beginTransaction();
         Log.d(TAG, "Transaction started");
         SQLiteStatement insert = null;
@@ -108,11 +107,13 @@ public class ChallengeStorage {
     }
 
     public void showStorage() {
+        db = dbHelper.getReadableDatabase();
         Cursor c = db.query(TABLE_NAME, null, null, null, null, null, null);
         watchTableByCursor(c);
     }
 
     public Cursor getCursorToSortedTable() {
+        db = dbHelper.getReadableDatabase();
         Cursor c = db.rawQuery("SELECT * FROM " + TABLE_NAME + " ORDER BY " + DEADLINE + " ASC", null);
         return c;
     }

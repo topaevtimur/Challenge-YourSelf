@@ -32,7 +32,7 @@ public class DBContract {
                 + CLOSED + " INTEGER"
                 + ")";
 
-        public static final String[] allArgs = {ID, START, DEADDATE, DEADTIME, CHALLENGE, DETAILS, DEADLINE, DONE};
+        public static final String[] allArgs = {ID, START, DEADDATE, DEADTIME, CHALLENGE, DETAILS, DEADLINE, CLOSED};
     }
 
     private DBContract() {}

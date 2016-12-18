@@ -17,7 +17,7 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.GregorianCalendar;
 
-import v.challengeyourself.storage.ChallengesGetter;
+import v.challengeyourself.storage.ChallengeStorage;
 import v.challengeyourself.utils.CalendarChallsRecAdapter;
 import v.challengeyourself.utils.RecyclerDividersDecorator;
 
@@ -70,7 +70,7 @@ public class CalendarActivity extends AppCompatActivity {
         }
 
         try {
-            adapter.setChallenges(new ChallengesGetter(context).getRunning(date), date);
+            adapter.setChallenges(new ChallengeStorage(context).getRunning(date), date);
             noChalls.setVisibility(View.GONE);
             challengesRecyclerView.setVisibility(View.VISIBLE);
         } catch (FileNotFoundException e) {

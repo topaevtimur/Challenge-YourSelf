@@ -58,8 +58,17 @@ public class ChallengeStorage {
     }
 
     public void showStorage() {
-        Log.d(TAG, "--- Rows in mytable: ---");
         Cursor c = db.query(TABLE_NAME, null, null, null, null, null, null);
+        watchTableByCursor(c);
+    }
+
+    public void sortByDeadLines() {
+        Cursor c = db.rawQuery("SELECT * FROM " + TABLE_NAME + " ORDER BY " + DEADLINE + " ASC", null);
+        watchTableByCursor(c);
+    }
+
+    private void watchTableByCursor(Cursor c) {
+        Log.d(TAG, "--- Rows in mytable: ---");
         if (c.moveToFirst()) {
             int idi = c.getColumnIndex(ID);
             int si = c.getColumnIndex(START);
@@ -84,4 +93,5 @@ public class ChallengeStorage {
         }
         c.close();
     }
+
 }

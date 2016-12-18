@@ -114,7 +114,7 @@ public class EditorActivity extends AppCompatActivity {
                 + ", challenge = " + newch.challenge
                 + ", details = " + newch.details
                 + ", deadLine(time in millis) " + newch.deadLine
-                + ", done? " + newch.done);
+                + ", closed? " + newch.closed);
         storage.put(newch);
         //storage.showStorage();
         storage.sortByDeadLines();

@@ -21,11 +21,11 @@ public class ChallengeStorage {
 
     public ChallengeStorage(Context context) {
         this.context = context;
+        dbHelper = DBHelper.getInstance(context);
+        db = dbHelper.getWritableDatabase();
     }
 
     public void put(Challenge newch) {
-        dbHelper = DBHelper.getInstance(context);
-        db = dbHelper.getWritableDatabase();
         db.beginTransaction();
         Log.d(TAG, "Transaction started");
         SQLiteStatement insert = null;
@@ -37,7 +37,7 @@ public class ChallengeStorage {
                     + CHALLENGE + ", "
                     + DETAILS + ", "
                     + DEADLINE + ", "
-                    + DONE;
+                    + CLOSED;
             String request = ") VALUES (?, ?, ?, ?, ?, ?, ?)";
             insert = db.compileStatement(statement + request);
             int pos = 0;
@@ -47,7 +47,7 @@ public class ChallengeStorage {
             insert.bindString(++pos, newch.challenge);
             insert.bindString(++pos, newch.details);
             insert.bindLong(++pos, newch.deadLine);
-            insert.bindLong(++pos, newch.done);
+            insert.bindLong(++pos, newch.closed);
 
             insert.executeInsert();
             db.setTransactionSuccessful();
@@ -62,8 +62,13 @@ public class ChallengeStorage {
         watchTableByCursor(c);
     }
 
-    public void sortByDeadLines() {
+    public Cursor getCursorToSortedTable() {
         Cursor c = db.rawQuery("SELECT * FROM " + TABLE_NAME + " ORDER BY " + DEADLINE + " ASC", null);
+        return c;
+    }
+
+    public void sortByDeadLines() {
+        Cursor c = getCursorToSortedTable();
         watchTableByCursor(c);
     }
 
@@ -77,7 +82,7 @@ public class ChallengeStorage {
             int ci = c.getColumnIndex(CHALLENGE);
             int di = c.getColumnIndex(DETAILS);
             int timei = c.getColumnIndex(DEADLINE);
-            int donei = c.getColumnIndex(DONE);
+            int closei = c.getColumnIndex(CLOSED);
 
             do {
                 Log.d(TAG, "id = " + c.getInt(idi) + "start = " + c.getString(si)
@@ -86,12 +91,11 @@ public class ChallengeStorage {
                         + ", challenge=" + c.getString(ci)
                         + ", details=" + c.getString(di)
                         + ", deadline=" + c.getLong(timei)
-                        + ", done=" + c.getLong(donei));
+                        + ", closed=" + c.getLong(closei));
             } while (c.moveToNext());
         } else {
             Log.d(TAG, "0 rows");
         }
         c.close();
     }
-
 }

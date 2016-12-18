@@ -31,7 +31,9 @@ public class DBContract {
                 + DEADLINE + " INTEGER, "
                 + DONE + " INTEGER"
                 + ")";
+
+        public static final String[] allArgs = {ID, START, DEADDATE, DEADTIME, CHALLENGE, DETAILS, DEADLINE, DONE};
     }
 
-    private DBContract() {};
+    private DBContract() {}
 }

@@ -13,11 +13,13 @@ import android.widget.EditText;
 import android.widget.TimePicker;
 import android.widget.Toast;
 
-import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
 
+import v.challengeyourself.model.Challenge;
 import v.challengeyourself.storage.ChallengeStorage;
+
+import static v.challengeyourself.Constants.DATE_FORMAT;
 
 /**
  * Created by penguinni on 27.11.16.
@@ -31,9 +33,6 @@ public class EditorActivity extends AppCompatActivity {
     private DatePickerDialog datePickerDialog;
     private TimePickerDialog timePickerDialog;
 
-    private SimpleDateFormat dateFormat;
-    private SimpleDateFormat timeFormat;
-
     private ChallengeStorage storage;
     private Calendar full = Calendar.getInstance();
 
@@ -41,8 +40,6 @@ public class EditorActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_editor);
-        dateFormat = new SimpleDateFormat("dd/MM/yyyy");
-        timeFormat = new SimpleDateFormat("hh:mm");
         findViewsById();
         chooseDateTime();
     }
@@ -79,7 +76,7 @@ public class EditorActivity extends AppCompatActivity {
                 full.set(Calendar.YEAR, year);
                 full.set(Calendar.MONTH, month);
                 full.set(Calendar.DAY_OF_MONTH, dayOfMonth);
-                getDate.setText(dateFormat.format(newDate.getTime()));
+                getDate.setText(DATE_FORMAT.format(newDate.getTime()));
             }
         }, cd.get(Calendar.YEAR), cd.get(Calendar.MONTH), cd.get(Calendar.DAY_OF_MONTH));
 
@@ -105,7 +102,7 @@ public class EditorActivity extends AppCompatActivity {
     public void onClickSave() {
         Toast.makeText(getApplicationContext(), "Saving", Toast.LENGTH_SHORT).show();
 
-        String start = dateFormat.format(new Date());
+        String start = DATE_FORMAT.format(new Date());
         String deadDate = getDate.getText().toString();
         String deadTime = getTime.getText().toString();
         String chall = challenge.getText().toString();

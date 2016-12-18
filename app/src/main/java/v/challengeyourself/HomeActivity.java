@@ -48,5 +48,13 @@ public class HomeActivity extends AppCompatActivity {
             }
         });
         Button challenges_btn = (Button) findViewById(R.id.challenges);
+        challenges_btn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                save();
+                Intent intent = new Intent(HomeActivity.this, ChallengeActivity.class);
+                startActivity(intent);
+            }
+        });
     }
 }

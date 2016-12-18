@@ -32,14 +32,17 @@ public class EditorActivity extends AppCompatActivity {
     private TimePickerDialog timePickerDialog;
 
     private SimpleDateFormat dateFormat;
+    private SimpleDateFormat timeFormat;
 
     private ChallengeStorage storage;
+    private Calendar full = Calendar.getInstance();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_editor);
         dateFormat = new SimpleDateFormat("dd/MM/yyyy");
+        timeFormat = new SimpleDateFormat("hh:mm");
         findViewsById();
         chooseDateTime();
     }
@@ -66,13 +69,16 @@ public class EditorActivity extends AppCompatActivity {
     }
 
     private void chooseDateTime() {
-        Calendar cd = Calendar.getInstance();
 
+        Calendar cd = Calendar.getInstance();
         datePickerDialog = new DatePickerDialog(this, new DatePickerDialog.OnDateSetListener() {
             @Override
             public void onDateSet(DatePicker view, int year, int month, int dayOfMonth) {
                 Calendar newDate = Calendar.getInstance();
                 newDate.set(year, month, dayOfMonth);
+                full.set(Calendar.YEAR, year);
+                full.set(Calendar.MONTH, month);
+                full.set(Calendar.DAY_OF_MONTH, dayOfMonth);
                 getDate.setText(dateFormat.format(newDate.getTime()));
             }
         }, cd.get(Calendar.YEAR), cd.get(Calendar.MONTH), cd.get(Calendar.DAY_OF_MONTH));
@@ -81,6 +87,10 @@ public class EditorActivity extends AppCompatActivity {
         timePickerDialog = new TimePickerDialog(this, new TimePickerDialog.OnTimeSetListener() {
             @Override
             public void onTimeSet(TimePicker view, int hourOfDay, int minute) {
+                Calendar newTime = Calendar.getInstance();
+                newTime.set(hourOfDay, minute);
+                full.set(Calendar.HOUR_OF_DAY, hourOfDay);
+                full.set(Calendar.MINUTE, minute);
                 getTime.setText(hourOfDay + ":" + minute);
             }
         }, ct.get(Calendar.HOUR_OF_DAY), ct.get(Calendar.MINUTE), false);
@@ -102,13 +112,16 @@ public class EditorActivity extends AppCompatActivity {
         String deadTime = getTime.getText().toString();
         String chall = challenge.getText().toString();
         String det = details.getText().toString();
-
-        Log.d(TAG, "Write to storage: start = " + start
-                + ", deadDate = " + deadDate
-                + ", deadTime = " + deadTime
-                + ", challenge = " + chall
-                + ", details = " + det);
-        storage.put(start, deadDate, deadTime, chall, det);
+        Challenge newch = new Challenge(start, deadDate, deadTime, chall, det, full.getTimeInMillis(), 0);
+        Log.d(TAG, "Write to storage: start = " + newch.start
+                + ", deadDate = " + newch.deadDate
+                + ", deadTime = " + newch.deadTime
+                + ", challenge = " + newch.challenge
+                + ", details = " + newch.details
+                + ", deadLine(time in millis) " + newch.deadLine
+                + ", done? " + newch.done);
+        storage.put(newch);
         storage.showStorage();
     }
+
 }

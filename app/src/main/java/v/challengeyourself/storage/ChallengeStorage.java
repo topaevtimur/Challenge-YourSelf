@@ -5,6 +5,9 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteStatement;
 import android.util.Log;
+
+import v.challengeyourself.Challenge;
+
 import static v.challengeyourself.storage.DBContract.Columns.*;
 
 /**
@@ -20,11 +23,7 @@ public class ChallengeStorage {
         this.context = context;
     }
 
-    public void put(String start,
-                    String deadDate,
-                    String deadTime,
-                    String challenge,
-                    String details) {
+    public void put(Challenge newch) {
         dbHelper = DBHelper.getInstance(context);
         db = dbHelper.getWritableDatabase();
         db.beginTransaction();
@@ -36,15 +35,19 @@ public class ChallengeStorage {
                     + DEADDATE + ", "
                     + DEADTIME + ", "
                     + CHALLENGE + ", "
-                    + DETAILS;
-            String request = ") VALUES (?, ?, ?, ?, ?)";
+                    + DETAILS + ", "
+                    + DEADLINE + ", "
+                    + DONE;
+            String request = ") VALUES (?, ?, ?, ?, ?, ?, ?)";
             insert = db.compileStatement(statement + request);
             int pos = 0;
-            insert.bindString(++pos, start);
-            insert.bindString(++pos, deadDate);
-            insert.bindString(++pos, deadTime);
-            insert.bindString(++pos, challenge);
-            insert.bindString(++pos, details);
+            insert.bindString(++pos, newch.start);
+            insert.bindString(++pos, newch.deadDate);
+            insert.bindString(++pos, newch.deadTime);
+            insert.bindString(++pos, newch.challenge);
+            insert.bindString(++pos, newch.details);
+            insert.bindLong(++pos, newch.deadLine);
+            insert.bindLong(++pos, newch.done);
 
             insert.executeInsert();
             db.setTransactionSuccessful();
@@ -64,13 +67,17 @@ public class ChallengeStorage {
             int dti = c.getColumnIndex(DEADTIME);
             int ci = c.getColumnIndex(CHALLENGE);
             int di = c.getColumnIndex(DETAILS);
+            int timei = c.getColumnIndex(DEADLINE);
+            int donei = c.getColumnIndex(DONE);
 
             do {
                 Log.d(TAG, "id = " + c.getInt(idi) + "start = " + c.getString(si)
                         + ", deadDate=" + c.getString(ddi)
                         + ", deadTime=" + c.getString(dti)
                         + ", challenge=" + c.getString(ci)
-                        + ", details=" + c.getString(di));
+                        + ", details=" + c.getString(di)
+                        + ", deadline=" + c.getLong(timei)
+                        + ", done=" + c.getLong(donei));
             } while (c.moveToNext());
         } else {
             Log.d(TAG, "0 rows");

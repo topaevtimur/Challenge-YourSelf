@@ -13,6 +13,8 @@ public class DBContract {
         String DEADTIME = "deadTime";
         String CHALLENGE = "challenge";
         String DETAILS = "details";
+        String DEADLINE = "deadline";
+        String DONE = "done";
     }
 
     public static final class Columns implements TableColumns {
@@ -25,7 +27,9 @@ public class DBContract {
                 + DEADDATE + " INTEGER, "
                 + DEADTIME + " INTEGER, "
                 + CHALLENGE + " TEXT, "
-                + DETAILS  + " TEXT"
+                + DETAILS  + " TEXT, "
+                + DEADLINE + " INTEGER, "
+                + DONE + " INTEGER"
                 + ")";
     }
 

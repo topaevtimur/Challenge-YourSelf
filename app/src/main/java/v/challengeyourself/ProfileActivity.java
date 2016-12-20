@@ -1,125 +1,83 @@
 package v.challengeyourself;
 
+import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.View;
-import android.widget.Button;
 import android.widget.EditText;
-import android.widget.ProgressBar;
-import android.widget.TextView;
-import android.widget.Toast;
+import android.widget.ImageView;
 
-import java.io.FileInputStream;
 import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
-import java.io.IOException;
 
-import v.challengeyourself.storage.ChallengesGetter;
+import v.challengeyourself.storage.DoneChallengesGetter;
+import v.challengeyourself.utils.DoneChallengesAdapter;
 import v.challengeyourself.utils.RecyclerDividersDecorator;
-
-import static v.challengeyourself.R.id.first_name;
 
 /**
  * Created by AdminPC on 18.11.2016.
  */
-
+//TODO Отображать фото
+//TODO заменить фон Checkbox или заменить вообще Checkbox
 public class ProfileActivity extends AppCompatActivity {
-    //EditText nick, first_name, second_name, date_of_birth, city;
-    EditText editText[];
-    Button edit_button, save_button;
+    EditText nick, first_name, second_name, date_of_birth, city;
+    ImageView user_photo;
     private static final String TAG = "myLogs";
-    private String profile_file = "profile";
     private RecyclerView challengesRecyclerView;
+    private DoneChallengesAdapter adapter = null;
+    private Context context = this;
+    private Intent intent;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_profile);
-        editText = new EditText[10];
-        editText[0] = (EditText) findViewById(R.id.nick);
-        editText[1] = (EditText) findViewById(first_name);
-        editText[2] = (EditText) findViewById(R.id.second_name);
-        editText[3] = (EditText) findViewById(R.id.date_of_birth);
-        editText[4] = (EditText) findViewById(R.id.city);
-        edit_button = (Button) findViewById(R.id.edit_button);
-        save_button =(Button) findViewById(R.id.save_button);
-        try {
-            FileInputStream in = openFileInput(profile_file);
-            for(int i = 0 ; i < 5; i++){
-                int c;
-                String temp="";
-                while((c = in.read()) != -1) {
-                    if((char)c == '&') break;
-                    temp = temp + Character.toString((char)c);
-                    Log.d(TAG, Character.toString((char)c));
-                }
-                editText[i].setText(temp);
-            }
-        } catch (FileNotFoundException e) {
-            e.printStackTrace();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-        edit_button.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                showDisplay(true);
-            }
-        });
 
-        save_button.setOnClickListener(new View.OnClickListener() {
+        initContentView();
 
-            String data = "";
+        setPrivateInfo();
 
-            @Override
-            public void onClick(View v) {
-                try{
-                    FileOutputStream out = openFileOutput(profile_file,MODE_WORLD_READABLE);
-                    for(int i = 0; i < 5; i++) {
-                    data = data + editText[i].getText() + '&';
-                    }
-                    Log.d(TAG, data);
-                    out.write(data.getBytes());
-                    out.close();
-                } catch (FileNotFoundException e) {
-                    e.printStackTrace();
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
-                showDisplay(false);
-                Toast.makeText(getBaseContext(), "saved", Toast.LENGTH_SHORT).show();
-            }
-        });
-
-        challengesRecyclerView = (RecyclerView) findViewById(R.id.calendar_challenges_recycler);
+        challengesRecyclerView = (RecyclerView) findViewById(R.id.done_challenges);
         challengesRecyclerView.setLayoutManager(new LinearLayoutManager(this));
-        challengesRecyclerView.addItemDecoration(
-                new RecyclerDividersDecorator(getResources().getColor(R.color.colorPrimaryDark)));
+        challengesRecyclerView.addItemDecoration(new RecyclerDividersDecorator(getResources().getColor(R.color.colorPrimaryDark)));
 
-    //    setAdapter();
+        setAdapter();
 
     }
 
-/*    private void setAdapter() {
-        challengesRecyclerView.setVisibility(View.VISIBLE);
-    }
-*/
-    private void showDisplay(boolean flag){
-        for (int i = 0; i < 5; i++) {
-            editText[i].setFocusableInTouchMode(flag);
-            editText[i].setCursorVisible(flag);
-            editText[i].setFocusable(flag);
-            editText[i].setLongClickable(flag);
+    private void setAdapter() {
+        if (adapter == null) {
+            adapter = new DoneChallengesAdapter(context);
+            challengesRecyclerView.setAdapter(adapter);
         }
-        if(flag) {
-            edit_button.setVisibility(View.GONE);
-            save_button.setVisibility(View.VISIBLE);
-        } else {
-            edit_button.setVisibility(View.VISIBLE);
-            save_button.setVisibility(View.GONE);
+        try {
+            adapter.setChallenges(new DoneChallengesGetter(context).getRunning());
+            challengesRecyclerView.setVisibility(View.VISIBLE);
+        } catch (FileNotFoundException e) {
+            challengesRecyclerView.setVisibility(View.GONE);
         }
     }
+
+    private void initContentView(){
+        nick =(EditText)findViewById(R.id.nick);
+        first_name = (EditText)findViewById(R.id.first_name);
+        second_name = (EditText)findViewById(R.id.second_name);
+        date_of_birth = (EditText)findViewById(R.id.date_of_birth);
+        city = (EditText)findViewById(R.id.city);
+        user_photo = (ImageView)findViewById(R.id.user_photo);
+        intent = getIntent();
+    }
+
+    private void setPrivateInfo() {
+       // nick.setText(intent.getIntExtra("userid"));
+        first_name.setText(intent.getStringExtra("fname"));
+        second_name.setText(intent.getStringExtra("sname"));
+        date_of_birth.setText(intent.getStringExtra("dateofbirth"));
+        city.setText((intent.getStringExtra("city")));
+       // Log.d("MYLOGS", intent.getStringExtra("city"));
+        //user_photo.setImageBitmap(intent.getStringArrayExtra("usetphoto"));
+    }
+
 }

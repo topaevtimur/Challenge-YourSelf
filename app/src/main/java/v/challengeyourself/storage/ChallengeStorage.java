@@ -33,6 +33,7 @@ public class ChallengeStorage {
 
     public List<Challenge> getRunning(Date date) throws FileNotFoundException {
         db = dbHelper.getReadableDatabase();
+
         Cursor cursor = db.query(
                 DBContract.Columns.TABLE_NAME,
                 DBContract.Columns.allArgs,

@@ -18,13 +18,12 @@ import v.challengeyourself.model.Challenge;
 import static v.challengeyourself.Constants.DATE_FORMAT;
 
 /**
- * Created by penguinni on 18.12.16.
+ * Created by AdminPC on 18.12.2016.
  */
 
-public class CalendarChallsRecAdapter
-    extends RecyclerView.Adapter<CalendarChallsRecAdapter.ChallengeViewHolder> {
+public class DoneChallengesAdapter extends RecyclerView.Adapter<DoneChallengesAdapter.ChallengeViewHolder> {
 
-    public CalendarChallsRecAdapter(Context context) {
+    public DoneChallengesAdapter(Context context) {
         this.context = context;
         this.layoutInflater = LayoutInflater.from(context);
     }
@@ -33,19 +32,19 @@ public class CalendarChallsRecAdapter
     private final LayoutInflater layoutInflater;
     private List<Challenge> challenges = new ArrayList<>();
 
-    public void setChallenges(List<Challenge> challenges, Date date) {
-        Log.d("challenges expiring on ", DATE_FORMAT.format(date));
+    public void setChallenges(List<Challenge> challenges) {
         this.challenges = challenges;
         notifyDataSetChanged();
     }
 
     @Override
-    public ChallengeViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        return ChallengeViewHolder.newInstance(layoutInflater, parent);
+    public DoneChallengesAdapter.ChallengeViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+        return DoneChallengesAdapter.ChallengeViewHolder.newInstance(layoutInflater, parent);
     }
 
+
     @Override
-    public void onBindViewHolder(ChallengeViewHolder holder, int position) {
+    public void onBindViewHolder(DoneChallengesAdapter.ChallengeViewHolder holder, int position) {
         final Challenge challenge = challenges.get(position);
         holder.challengeName.setText(challenge.challenge);
         holder.deadTime.setText(challenge.deadTime);
@@ -68,9 +67,9 @@ public class CalendarChallsRecAdapter
             details = (TextView) itemView.findViewById(R.id.description);
         }
 
-        static ChallengeViewHolder newInstance(LayoutInflater layoutInflater, ViewGroup parent) {
-            final View view = layoutInflater.inflate(R.layout.calendar_item_challenge, parent, false);
-            return new ChallengeViewHolder(view);
+        static DoneChallengesAdapter.ChallengeViewHolder newInstance(LayoutInflater layoutInflater, ViewGroup parent) {
+            final View view = layoutInflater.inflate(R.layout.done_item_challenge, parent, false);
+            return new DoneChallengesAdapter.ChallengeViewHolder(view);
         }
     }
 }

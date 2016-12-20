@@ -169,23 +169,25 @@
         android:layout_alignParentTop="true"
         android:layout_alignParentStart="true" />
 
-    <Button
-        android:text="editor"
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/done_challenges"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@+id/rec_name"
+        android:layout_alignParentStart="true"
+        android:layout_marginTop="10dp" />
+
+    <TextView
+        android:text="ACHIEVEMENT"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_below="@+id/photo"
-        android:layout_alignParentStart="true"
-        android:id="@+id/edit_button" />
-
-    <Button
-        android:text="save"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/photo"
-        android:layout_alignParentStart="true"
-        android:id="@+id/save_button"
-        android:visibility="gone"/>
-
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="25dp"
+        android:id="@+id/rec_name"
+        android:textAppearance="@android:style/TextAppearance.Holo.Medium"
+        android:fontFamily="monospace"
+        android:textColor="@color/colorPrimaryDark" />
 
 
 </RelativeLayout>

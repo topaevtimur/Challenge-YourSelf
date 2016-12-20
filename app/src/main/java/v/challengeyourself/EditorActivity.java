@@ -1,3 +1,4 @@
+
 package v.challengeyourself;
 
 import android.app.DatePickerDialog;
@@ -17,7 +18,6 @@ import java.util.Calendar;
 import java.util.Date;
 
 import v.challengeyourself.model.Challenge;
-import v.challengeyourself.notifications.ScheduleClient;
 import v.challengeyourself.storage.ChallengeStorage;
 
 import static v.challengeyourself.Constants.DATE_FORMAT;
@@ -43,6 +43,18 @@ public class EditorActivity extends AppCompatActivity {
         setContentView(R.layout.activity_editor);
         findViewsById();
         chooseDateTime();
+       checkSpecified();
+    }
+
+    private void checkSpecified() {
+        getDate.setText(findInExtra("date"));
+        challenge.setText(findInExtra("challenge"));
+        details.setText(findInExtra("details"));
+    }
+
+    private String findInExtra(String key) {
+        String result = this.getIntent().getStringExtra(key);
+        return result == null ? "" : result;
     }
 
     private void findViewsById() {
@@ -120,4 +132,3 @@ public class EditorActivity extends AppCompatActivity {
         //storage.showStorage();
         storage.sortByDeadLines();
     }
-}

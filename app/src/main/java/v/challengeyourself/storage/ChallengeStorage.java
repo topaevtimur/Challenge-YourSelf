@@ -6,8 +6,14 @@ import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteStatement;
 import android.util.Log;
 
+import java.io.FileNotFoundException;
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.List;
+
 import v.challengeyourself.model.Challenge;
 
+import static v.challengeyourself.Constants.DATE_FORMAT;
 import static v.challengeyourself.storage.DBContract.Columns.*;
 
 /**
@@ -21,11 +27,54 @@ public class ChallengeStorage {
 
     public ChallengeStorage(Context context) {
         this.context = context;
-        dbHelper = DBHelper.getInstance(context);
-        db = dbHelper.getWritableDatabase();
+
+        this.dbHelper = DBHelper.getInstance(context);
+    }
+
+    public List<Challenge> getRunning(Date date) throws FileNotFoundException {
+        db = dbHelper.getReadableDatabase();
+        Cursor cursor = db.query(
+                DBContract.Columns.TABLE_NAME,
+                DBContract.Columns.allArgs,
+                DBContract.Columns.DEADDATE + "=? AND " +
+                        DBContract.Columns.CLOSED + "=?",
+                new String[] {DATE_FORMAT.format(date.getTime()), String.valueOf(0)},
+                null, null, null);
+
+        List<Challenge> result = new ArrayList<>();
+        try {
+            if (cursor != null && cursor.moveToFirst()) {
+                while (true) {
+                    int pos = 0;
+                    result.add(new Challenge(
+                            cursor.getString(++pos),
+                            cursor.getString(++pos),
+                            cursor.getString(++pos),
+                            cursor.getString(++pos),
+                            cursor.getString(++pos),
+                            cursor.getLong(++pos),
+                            cursor.getInt(++pos)
+                    ));
+
+                    if (!cursor.moveToNext()) {
+                        break;
+                    }
+                }
+            }
+        } finally {
+            if (cursor != null) {
+                cursor.close();
+            }
+        }
+
+        if (result.isEmpty()) {
+            throw new FileNotFoundException("No challenges that expire on " + DATE_FORMAT.format(date));
+        }
+        return result;
     }
 
     public void put(Challenge newch) {
+        db = dbHelper.getWritableDatabase();
         db.beginTransaction();
         Log.d(TAG, "Transaction started");
         SQLiteStatement insert = null;
@@ -58,11 +107,13 @@ public class ChallengeStorage {
     }
 
     public void showStorage() {
+        db = dbHelper.getReadableDatabase();
         Cursor c = db.query(TABLE_NAME, null, null, null, null, null, null);
         watchTableByCursor(c);
     }
 
     public Cursor getCursorToSortedTable() {
+        db = dbHelper.getReadableDatabase();
         Cursor c = db.rawQuery("SELECT * FROM " + TABLE_NAME + " ORDER BY " + DEADLINE + " ASC", null);
         return c;
     }

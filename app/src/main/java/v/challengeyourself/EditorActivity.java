@@ -42,6 +42,18 @@ public class EditorActivity extends AppCompatActivity {
         setContentView(R.layout.activity_editor);
         findViewsById();
         chooseDateTime();
+        checkSpecified();
+    }
+
+    private void checkSpecified() {
+        getDate.setText(findInExtra("date"));
+        challenge.setText(findInExtra("challenge"));
+        details.setText(findInExtra("details"));
+    }
+
+    private String findInExtra(String key) {
+        String result = this.getIntent().getStringExtra(key);
+        return result == null ? "" : result;
     }
 
     private void findViewsById() {
@@ -66,7 +78,6 @@ public class EditorActivity extends AppCompatActivity {
     }
 
     private void chooseDateTime() {
-
         Calendar cd = Calendar.getInstance();
         datePickerDialog = new DatePickerDialog(this, new DatePickerDialog.OnDateSetListener() {
             @Override

@@ -17,6 +17,7 @@ import java.util.Calendar;
 import java.util.Date;
 
 import v.challengeyourself.model.Challenge;
+import v.challengeyourself.notifications.ScheduleClient;
 import v.challengeyourself.storage.ChallengeStorage;
 
 import static v.challengeyourself.Constants.DATE_FORMAT;

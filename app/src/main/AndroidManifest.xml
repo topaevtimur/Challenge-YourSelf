@@ -28,6 +28,8 @@
         <activity
             android:name=".ChallengeActivity">
         </activity>
+        <service android:name=".notifications.NotifyService"/>
+        <service android:name=".notifications.ScheduleService"/>
     </application>
 
 </manifest>

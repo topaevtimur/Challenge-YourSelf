@@ -16,7 +16,7 @@ import java.util.Arrays;
  * Created by AdminPC on 20.12.2016.
  */
 
-public class LoginActivity extends AppCompatActivity{
+public class LoginActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -43,6 +43,7 @@ public class LoginActivity extends AppCompatActivity{
         final Intent intent = new Intent(LoginActivity.this, HomeActivity.class);
         startActivity(intent);
     }
+
 
 }
 

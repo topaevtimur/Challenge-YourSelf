@@ -1,3 +1,4 @@
+
 package v.challengeyourself.loader;
 
 /**
@@ -54,3 +55,4 @@ public class LoadResult<TData, TError> {
         return new LoadResult<>(ResultType.NO_INTERNET, null, null);
     }
 }
+

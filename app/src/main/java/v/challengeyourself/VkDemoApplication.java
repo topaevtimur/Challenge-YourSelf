@@ -1,3 +1,4 @@
+
 package v.challengeyourself;
 
 import android.app.Application;
@@ -23,3 +24,4 @@ public class VkDemoApplication extends Application {
     }
 
 }
+

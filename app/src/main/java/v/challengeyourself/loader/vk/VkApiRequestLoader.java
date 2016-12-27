@@ -112,4 +112,5 @@ public class VkApiRequestLoader<TData extends VKApiModel>
 
 
     private static final String TAG = "VkLoader";
+
 }

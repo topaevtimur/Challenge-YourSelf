@@ -1,3 +1,4 @@
+
 package v.challengeyourself.utils;
 
 import android.content.Context;
@@ -73,3 +74,4 @@ public class DoneChallengesAdapter extends RecyclerView.Adapter<DoneChallengesAd
         }
     }
 }
+

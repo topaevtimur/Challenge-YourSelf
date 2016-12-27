@@ -2,28 +2,34 @@
     <string name="app_name">Challenge YourSelf</string>
     <string name="title_activity_calendar">Your Challenges</string>
 
-    <string name="category_fitness">fitness</string>
+    <string name="category_fitness">Спорт</string>
     <string-array name="fitness_offers">
-        <item>пробежка</item>
-        <item>спортзал</item>
-        <item>растяжка</item>
+        <item>Пробежка</item>
+        <item>Спортзал</item>
+        <item>Растяжка</item>
+        <item>Другое</item>
     </string-array>
 
-    <string name="category_chores">chores</string>
+    <string name="category_chores">Дела по дому</string>
     <string-array name="chores_offers">
-        <item>вымыть посуду</item>
-        <item>убраться в комнате</item>
-        <item>вымыть полы</item>
+        <item>Вымыть посуду</item>
+        <item>Убраться в комнате</item>
+        <item>Вымыть полы</item>
+        <item>Другое</item>
     </string-array>
 
-    <string name="category_relax">relax</string>
+    <string name="category_relax">Отдых</string>
     <string-array name="relax_offers">
-        <item>погладить кота</item>
-        <item>принять пенную ванну</item>
-        <item>выпить винишка</item>
+        <item>Погладить кота</item>
+        <item>Принять пенную ванну</item>
+        <item>Выпить винишка</item>
+        <item>Другое</item>
     </string-array>
 
-    <string name="category_default">\?\?\?</string>
+    <string name="category_default">Другое</string>
+    <string-array name="default_offers">
+        <item>Создать новый challenge</item>
+    </string-array>
 
 
     <string name="logout">Выйти</string>

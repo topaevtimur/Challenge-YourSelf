@@ -3,10 +3,12 @@ package v.challengeyourself;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.text.Layout;
 import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.LinearLayout;
 import android.widget.Spinner;
 import android.widget.TextView;
 
@@ -25,7 +27,7 @@ public class ChallengeActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_challenge);
 
-        final Spinner fitnessSpinner = (Spinner) findViewById(R.id.category_fitness);
+        Spinner fitnessSpinner = (Spinner) findViewById(R.id.category_fitness);
         setSpinner(fitnessSpinner, R.array.fitness_offers, R.string.category_fitness);
 
         Spinner relaxSpinner = (Spinner) findViewById(R.id.category_relax);
@@ -34,30 +36,11 @@ public class ChallengeActivity extends AppCompatActivity {
         Spinner choresSpinner = (Spinner) findViewById(R.id.category_chores);
         setSpinner(choresSpinner, R.array.chores_offers, R.string.category_chores);
 
-        TextView defaultTV = (TextView) findViewById(R.id.category_default);
-        defaultTV.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(ChallengeActivity.this, EditorActivity.class);
-                startActivity(intent);
-            }
-        });
-
-        setTV((TextView) findViewById(R.id.fitness_tv), fitnessSpinner);
-        setTV((TextView) findViewById(R.id.chores_tv), choresSpinner);
-        setTV((TextView) findViewById(R.id.relax_tv), relaxSpinner);
+        Spinner defaultSpinner = (Spinner) findViewById(R.id.category_default);
+        setSpinner(defaultSpinner, R.array.default_offers, R.string.category_default);
     }
 
-    void setTV(TextView textView, final Spinner spinner) {
-        textView.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                spinner.performClick();
-            }
-        });
-    }
-
-    void setSpinner(Spinner spinner, final int resourceID, final int nameID) {
+    void setSpinner(final Spinner spinner, final int resourceID, final int nameID) {
         ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(this,
                 resourceID, android.R.layout.simple_spinner_item);
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
@@ -66,17 +49,21 @@ public class ChallengeActivity extends AppCompatActivity {
         spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                //TODO: fix this shit it autotriggers itself on start of the activity
-
-                Intent intent = new Intent(ChallengeActivity.this, EditorActivity.class);
-                intent.putExtra("challenge", getResources().getString(nameID));
-                intent.putExtra("details", getResources().getStringArray(resourceID)[position]);
-                startActivity(intent);
+                if (position >= 0) {
+                    Intent intent = new Intent(ChallengeActivity.this, EditorActivity.class);
+                    if (!getResources().getString(nameID).equals("Другое")) {
+                        intent.putExtra("challenge", getResources().getString(nameID));
+                        if (!getResources().getStringArray(resourceID)[position].equals("Другое")) {
+                            intent.putExtra("details", getResources().getStringArray(resourceID)[position]);
+                        }
+                    }
+                    spinner.setSelection(0);
+                    startActivity(intent);
+                }
             }
 
             @Override
-            public void onNothingSelected(AdapterView<?> parent) {
-            }
+            public void onNothingSelected(AdapterView<?> parent) { }
         });
     }
 }

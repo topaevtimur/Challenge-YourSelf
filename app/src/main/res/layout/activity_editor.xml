@@ -31,4 +31,10 @@
         android:layout_height="wrap_content"
         android:text="Save New Challenge" />
 
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="share"
+        android:id="@+id/share"/>
+
 </LinearLayout>

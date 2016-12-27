@@ -48,7 +48,6 @@ public class HomeActivity extends AppCompatActivity implements LoaderManager.Loa
 
     public Intent intentProfile;
 
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -86,15 +85,6 @@ public class HomeActivity extends AppCompatActivity implements LoaderManager.Loa
             }
         });
 
-        Button editor_btn = (Button) findViewById(R.id.editor);
-        editor_btn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                save();
-                Intent intent = new Intent(HomeActivity.this, EditorActivity.class);
-                startActivity(intent);
-            }
-        });
         Button challenges_btn = (Button) findViewById(R.id.challenges);
         challenges_btn.setOnClickListener(new View.OnClickListener() {
             @Override

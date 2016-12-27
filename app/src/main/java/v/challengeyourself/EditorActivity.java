@@ -118,7 +118,7 @@ public class EditorActivity extends AppCompatActivity {
         String deadTime = getTime.getText().toString();
         String chall = challenge.getText().toString();
         String det = details.getText().toString();
-        Challenge newch = new Challenge(start, deadDate, deadTime, chall, det, full.getTimeInMillis(), 0);
+        Challenge newch = new Challenge(-1, start, deadDate, deadTime, chall, det, full.getTimeInMillis(), 0);
         Log.d(TAG, "Write to storage: start = " + newch.start
                 + ", deadDate = " + newch.deadDate
                 + ", deadTime = " + newch.deadTime
@@ -127,7 +127,7 @@ public class EditorActivity extends AppCompatActivity {
                 + ", deadLine(time in millis) " + newch.deadLine
                 + ", closed? " + newch.closed);
         storage.put(newch);
-        //storage.showStorage();
-        storage.sortByDeadLines();
+        storage.showStorage();
+        //storage.sortByDeadLines();
     }
 }

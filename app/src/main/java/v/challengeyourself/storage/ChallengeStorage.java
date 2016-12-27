@@ -27,11 +27,17 @@ public class ChallengeStorage {
 
     public ChallengeStorage(Context context) {
         this.context = context;
-
         this.dbHelper = DBHelper.getInstance(context);
     }
 
-    public List<Challenge> getRunning(Date date) throws FileNotFoundException {
+    public void changeState(Challenge challenge, int state) {
+        db = dbHelper.getWritableDatabase();
+        db.execSQL("UPDATE " + DBContract.Columns.TABLE_NAME
+                + " SET " + DBContract.Columns.CLOSED + "=" + state
+                + " WHERE " + DBContract.Columns.ID + "=" + challenge.id);
+    }
+
+    public List<Challenge> getRunningByDate(Date date) throws FileNotFoundException {
         db = dbHelper.getReadableDatabase();
 
         Cursor cursor = db.query(
@@ -42,19 +48,36 @@ public class ChallengeStorage {
                 new String[] {DATE_FORMAT.format(date.getTime()), String.valueOf(0)},
                 null, null, null);
 
+        return get(cursor);
+    }
+
+    public List<Challenge> getCompleted() throws FileNotFoundException {
+        SQLiteDatabase sqLiteDatabase = dbHelper.getReadableDatabase();
+        Cursor cursor = sqLiteDatabase.query(
+                DBContract.Columns.TABLE_NAME,
+                DBContract.Columns.allArgs,
+                DBContract.Columns.CLOSED + "=?",
+                new String[] {String.valueOf(2)},
+                null, null, null);
+
+        return get(cursor);
+    }
+
+    private List<Challenge> get(Cursor cursor) throws FileNotFoundException {
         List<Challenge> result = new ArrayList<>();
         try {
             if (cursor != null && cursor.moveToFirst()) {
                 while (true) {
                     int pos = 0;
                     result.add(new Challenge(
-                            cursor.getString(++pos),
-                            cursor.getString(++pos),
-                            cursor.getString(++pos),
-                            cursor.getString(++pos),
-                            cursor.getString(++pos),
-                            cursor.getLong(++pos),
-                            cursor.getInt(++pos)
+                            cursor.getInt(pos++),
+                            cursor.getString(pos++),
+                            cursor.getString(pos++),
+                            cursor.getString(pos++),
+                            cursor.getString(pos++),
+                            cursor.getString(pos++),
+                            cursor.getLong(pos++),
+                            cursor.getInt(pos)
                     ));
 
                     if (!cursor.moveToNext()) {
@@ -69,7 +92,7 @@ public class ChallengeStorage {
         }
 
         if (result.isEmpty()) {
-            throw new FileNotFoundException("No challenges that expire on " + DATE_FORMAT.format(date));
+            throw new FileNotFoundException("Challenges not found");
         }
         return result;
     }
@@ -104,6 +127,7 @@ public class ChallengeStorage {
         } finally {
             db.endTransaction();
         }
+
         //db.close();
     }
 
@@ -137,7 +161,8 @@ public class ChallengeStorage {
             int closei = c.getColumnIndex(CLOSED);
 
             do {
-                Log.d(TAG, "id = " + c.getInt(idi) + "start = " + c.getString(si)
+                Log.d(TAG, "id = " + c.getInt(idi)
+                        + ", start = " + c.getString(si)
                         + ", deadDate=" + c.getString(ddi)
                         + ", deadTime=" + c.getString(dti)
                         + ", challenge=" + c.getString(ci)

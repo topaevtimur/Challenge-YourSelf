@@ -18,7 +18,7 @@ import java.util.Date;
 import java.util.GregorianCalendar;
 
 import v.challengeyourself.storage.ChallengeStorage;
-import v.challengeyourself.utils.CalendarChallsRecAdapter;
+import v.challengeyourself.utils.ChallengesRecycleAdapter;
 import v.challengeyourself.utils.RecyclerDividersDecorator;
 
 import static v.challengeyourself.Constants.DATE_FORMAT;
@@ -27,7 +27,7 @@ public class CalendarActivity extends AppCompatActivity {
     private TextView noChalls;
     private CalendarView calendar;
     private RecyclerView challengesRecyclerView;
-    private CalendarChallsRecAdapter adapter = null;
+    private ChallengesRecycleAdapter adapter = null;
     private Context context = this;
     private Date selected = Calendar.getInstance().getTime();
 
@@ -70,12 +70,12 @@ public class CalendarActivity extends AppCompatActivity {
 
     void setAdapter(Date date) {
         if (adapter == null) {
-            adapter = new CalendarChallsRecAdapter(context);
+            adapter = new ChallengesRecycleAdapter(context);
             challengesRecyclerView.setAdapter(adapter);
         }
 
         try {
-            adapter.setChallenges(new ChallengeStorage(context).getRunning(date), date);
+            adapter.setChallenges(new ChallengeStorage(context).getRunningByDate(date));
             noChalls.setVisibility(View.GONE);
             challengesRecyclerView.setVisibility(View.VISIBLE);
         } catch (FileNotFoundException e) {

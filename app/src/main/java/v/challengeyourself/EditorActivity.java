@@ -3,11 +3,9 @@ package v.challengeyourself;
 import android.app.AlarmManager;
 import android.app.DatePickerDialog;
 import android.app.PendingIntent;
-import android.app.Service;
 import android.app.TimePickerDialog;
 import android.content.Context;
 import android.content.Intent;
-import android.content.SearchRecentSuggestionsProvider;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.text.InputType;
@@ -33,7 +31,7 @@ import static v.challengeyourself.Constants.DATE_FORMAT;
  */
 public class EditorActivity extends AppCompatActivity {
     private final String TAG = "NEW CHALLENGE: ";
-    private final String ALARM = "ALARM NOTIFICATION";
+    private final String ALARM = "ALARM";
 
     private EditText getDate, getTime, challenge, details;
     private Button save;
@@ -44,14 +42,24 @@ public class EditorActivity extends AppCompatActivity {
     private ChallengeStorage storage;
     private Calendar full = Calendar.getInstance();
 
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_editor);
-
         findViewsById();
         chooseDateTime();
+        checkSpecified();
+    }
+
+    private void checkSpecified() {
+        getDate.setText(findInExtra("date"));
+        challenge.setText(findInExtra("challenge"));
+        details.setText(findInExtra("details"));
+    }
+
+    private String findInExtra(String key) {
+        String result = this.getIntent().getStringExtra(key);
+        return result == null ? "" : result;
     }
 
     private void findViewsById() {
@@ -62,7 +70,7 @@ public class EditorActivity extends AppCompatActivity {
         getTime = (EditText) findViewById(R.id.get_time);
         getTime.setInputType(InputType.TYPE_NULL);
 
-        challenge =(EditText)findViewById(R.id.challenge);
+        challenge = (EditText) findViewById(R.id.challenge);
         details = (EditText) findViewById(R.id.details);
 
         save = (Button) findViewById(R.id.save);
@@ -126,6 +134,7 @@ public class EditorActivity extends AppCompatActivity {
                 + ", deadLine(time in millis) " + newch.deadLine
                 + ", closed? " + newch.closed);
         storage.put(newch);
+        //storage.showStorage();
         storage.sortByDeadLines();
         scheduleAlarm(full, newch);
     }
@@ -160,5 +169,4 @@ public class EditorActivity extends AppCompatActivity {
         storage.showStorage();
         //storage.sortByDeadLines();
     }
-
 }

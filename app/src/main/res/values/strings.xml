@@ -1,4 +1,38 @@
 <resources>
     <string name="app_name">Challenge YourSelf</string>
     <string name="title_activity_calendar">Your Challenges</string>
+
+    <string name="category_fitness">fitness</string>
+    <string-array name="fitness_offers">
+        <item>пробежка</item>
+        <item>спортзал</item>
+        <item>растяжка</item>
+    </string-array>
+
+    <string name="category_chores">chores</string>
+    <string-array name="chores_offers">
+        <item>вымыть посуду</item>
+        <item>убраться в комнате</item>
+        <item>вымыть полы</item>
+    </string-array>
+
+    <string name="category_relax">relax</string>
+    <string-array name="relax_offers">
+        <item>погладить кота</item>
+        <item>принять пенную ванну</item>
+        <item>выпить винишка</item>
+    </string-array>
+
+    <string name="category_default">\?\?\?</string>
+
+
+    <string name="logout">Выйти</string>
+    <string name="error">Ошибка</string>
+    <string name="ok_demo">OK Demo</string>
+    <string name="no_internet">Отсуствует соединение</string>
+    <string name="signin_vk">Войти через ВКонтакте</string>
+    <string name="login_successful">Логин выполнен</string>
+    <string name="login_failed">Ошибка логина</string>
+    <string name="already_logged_in">Логин был выполнен ранее</string>
+
 </resources>

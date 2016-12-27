@@ -1,7 +1,13 @@
 package v.challengeyourself;
 
+import android.app.AlarmManager;
 import android.app.DatePickerDialog;
+import android.app.PendingIntent;
+import android.app.Service;
 import android.app.TimePickerDialog;
+import android.content.Context;
+import android.content.Intent;
+import android.content.SearchRecentSuggestionsProvider;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.text.InputType;
@@ -17,7 +23,7 @@ import java.util.Calendar;
 import java.util.Date;
 
 import v.challengeyourself.model.Challenge;
-import v.challengeyourself.notifications.ScheduleClient;
+import v.challengeyourself.notifications.AlarmReceiver;
 import v.challengeyourself.storage.ChallengeStorage;
 
 import static v.challengeyourself.Constants.DATE_FORMAT;
@@ -27,6 +33,7 @@ import static v.challengeyourself.Constants.DATE_FORMAT;
  */
 public class EditorActivity extends AppCompatActivity {
     private final String TAG = "NEW CHALLENGE: ";
+    private final String ALARM = "ALARM NOTIFICATION";
 
     private EditText getDate, getTime, challenge, details;
     private Button save;
@@ -37,10 +44,12 @@ public class EditorActivity extends AppCompatActivity {
     private ChallengeStorage storage;
     private Calendar full = Calendar.getInstance();
 
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_editor);
+
         findViewsById();
         chooseDateTime();
     }
@@ -117,7 +126,37 @@ public class EditorActivity extends AppCompatActivity {
                 + ", deadLine(time in millis) " + newch.deadLine
                 + ", closed? " + newch.closed);
         storage.put(newch);
-        //storage.showStorage();
         storage.sortByDeadLines();
+        scheduleAlarm(full, newch);
     }
+
+    private void scheduleAlarm(Calendar c, Challenge chall) {
+        AlarmManager manager = (AlarmManager) getSystemService(Context.ALARM_SERVICE);
+        long deadline = c.getTimeInMillis();
+
+        Intent intent = new Intent(this, AlarmReceiver.class);
+        intent.putExtra(Constants.CHALL, chall.challenge);
+        PendingIntent pending = PendingIntent.getBroadcast(this, (int) System.currentTimeMillis(), intent, PendingIntent.FLAG_UPDATE_CURRENT);
+
+        Log.d(ALARM, "ALARM IS SET WITHIN 5 SEC");
+        intent.putExtra(Constants.HOTNESS, 1);
+        manager.set(AlarmManager.RTC_WAKEUP, deadline - AlarmManager.INTERVAL_DAY * 2, pending);
+
+        Log.d(ALARM, "ALARM IS SET WITHIN 10 SEC");
+        intent.putExtra(Constants.HOTNESS, 2);
+        pending = PendingIntent.getBroadcast(this, (int) System.currentTimeMillis(), intent, 0);
+        manager.set(AlarmManager.RTC_WAKEUP, deadline - AlarmManager.INTERVAL_DAY, pending);
+
+        Log.d(ALARM, "ALARM IS SET WITHIN 20 SEC");
+        intent.putExtra(Constants.HOTNESS, 3);
+        pending = PendingIntent.getBroadcast(this, (int) System.currentTimeMillis(), intent, 0);
+        manager.set(AlarmManager.RTC_WAKEUP, deadline - AlarmManager.INTERVAL_HALF_DAY, pending);
+    }
+
+    private void cancelAlarm() {
+        AlarmManager manager = (AlarmManager) getSystemService(Context.ALARM_SERVICE);
+        PendingIntent pending = PendingIntent.getBroadcast(this, (int) System.currentTimeMillis(), new Intent(this, AlarmReceiver.class), PendingIntent.FLAG_CANCEL_CURRENT);
+        manager.cancel(pending);
+    }
+
 }

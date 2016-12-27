@@ -21,11 +21,15 @@ import v.challengeyourself.storage.ChallengeStorage;
 import v.challengeyourself.utils.CalendarChallsRecAdapter;
 import v.challengeyourself.utils.RecyclerDividersDecorator;
 
+import static v.challengeyourself.Constants.DATE_FORMAT;
+
 public class CalendarActivity extends AppCompatActivity {
     private TextView noChalls;
+    private CalendarView calendar;
     private RecyclerView challengesRecyclerView;
     private CalendarChallsRecAdapter adapter = null;
     private Context context = this;
+    private Date selected = Calendar.getInstance().getTime();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -35,12 +39,22 @@ public class CalendarActivity extends AppCompatActivity {
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
+        calendar = (CalendarView) findViewById(R.id.calendar);
+        calendar.setOnDateChangeListener(new CalendarView.OnDateChangeListener() {
+            @Override
+            public void onSelectedDayChange(CalendarView view, int year, int month, int dayOfMonth) {
+                selected = new GregorianCalendar(year, month, dayOfMonth).getTime();
+                setAdapter(selected);
+            }
+        });
+
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                startActivity(new Intent(CalendarActivity.this, EditorActivity.class));
-                //TODO: передавать дату
+                Intent intent = new Intent(CalendarActivity.this, EditorActivity.class);
+                intent.putExtra("date", DATE_FORMAT.format(selected));
+                startActivity(intent);
             }
         });
 
@@ -52,15 +66,6 @@ public class CalendarActivity extends AppCompatActivity {
                 new RecyclerDividersDecorator(getResources().getColor(R.color.colorPrimaryDark)));
 
         setAdapter(Calendar.getInstance().getTime());
-
-        CalendarView calendar = (CalendarView) findViewById(R.id.calendar);
-        calendar.setOnDateChangeListener(new CalendarView.OnDateChangeListener() {
-            @Override
-            public void onSelectedDayChange(CalendarView view, int year, int month, int dayOfMonth) {
-                setAdapter(new GregorianCalendar(year, month, dayOfMonth).getTime());
-            }
-        });
-
     }
 
     void setAdapter(Date date) {

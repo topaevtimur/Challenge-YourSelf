@@ -12,8 +12,8 @@ import android.widget.ImageView;
 
 import java.io.FileNotFoundException;
 
-import v.challengeyourself.storage.DoneChallengesGetter;
-import v.challengeyourself.utils.DoneChallengesAdapter;
+import v.challengeyourself.storage.ChallengeStorage;
+import v.challengeyourself.utils.ChallengesRecycleAdapter;
 import v.challengeyourself.utils.RecyclerDividersDecorator;
 
 /**
@@ -26,7 +26,7 @@ public class ProfileActivity extends AppCompatActivity {
     ImageView user_photo;
     private static final String TAG = "myLogs";
     private RecyclerView challengesRecyclerView;
-    private DoneChallengesAdapter adapter = null;
+    private ChallengesRecycleAdapter adapter = null;
     private Context context = this;
     private Intent intent;
 
@@ -49,11 +49,11 @@ public class ProfileActivity extends AppCompatActivity {
 
     private void setAdapter() {
         if (adapter == null) {
-            adapter = new DoneChallengesAdapter(context);
+            adapter = new ChallengesRecycleAdapter(context);
             challengesRecyclerView.setAdapter(adapter);
         }
         try {
-            adapter.setChallenges(new DoneChallengesGetter(context).getRunning());
+            adapter.setChallenges(new ChallengeStorage(context).getCompleted());
             challengesRecyclerView.setVisibility(View.VISIBLE);
         } catch (FileNotFoundException e) {
             challengesRecyclerView.setVisibility(View.GONE);

@@ -15,7 +15,6 @@ public class DBContract {
         String DETAILS = "details";
         String DEADLINE = "deadline";
         String CLOSED = "closed";
-        //String CATEGORY = "category";
     }
 
     public static final class Columns implements TableColumns {
@@ -31,10 +30,9 @@ public class DBContract {
                 + DETAILS  + " TEXT, "
                 + DEADLINE + " INTEGER, "
                 + CLOSED + " INTEGER"
-                //+ CATEGORY + " TEXT"
                 + ")";
 
-        public static final String[] allArgs = {ID, START, DEADDATE, DEADTIME, CHALLENGE, DETAILS, DEADLINE, CLOSED/*, CATEGORY*/};
+        public static final String[] allArgs = {ID, START, DEADDATE, DEADTIME, CHALLENGE, DETAILS, DEADLINE, CLOSED};
     }
 
     private DBContract() {}

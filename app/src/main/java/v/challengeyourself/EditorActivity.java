@@ -117,7 +117,7 @@ public class EditorActivity extends AppCompatActivity {
         String deadTime = getTime.getText().toString();
         String chall = challenge.getText().toString();
         String det = details.getText().toString();
-        Challenge newch = new Challenge(start, deadDate, deadTime, chall, det, full.getTimeInMillis(), 0);
+        Challenge newch = new Challenge(-1, start, deadDate, deadTime, chall, det, full.getTimeInMillis(), 0);
         Log.d(TAG, "Write to storage: start = " + newch.start
                 + ", deadDate = " + newch.deadDate
                 + ", deadTime = " + newch.deadTime
@@ -157,6 +157,8 @@ public class EditorActivity extends AppCompatActivity {
         AlarmManager manager = (AlarmManager) getSystemService(Context.ALARM_SERVICE);
         PendingIntent pending = PendingIntent.getBroadcast(this, (int) System.currentTimeMillis(), new Intent(this, AlarmReceiver.class), PendingIntent.FLAG_CANCEL_CURRENT);
         manager.cancel(pending);
+        storage.showStorage();
+        //storage.sortByDeadLines();
     }
 
 }

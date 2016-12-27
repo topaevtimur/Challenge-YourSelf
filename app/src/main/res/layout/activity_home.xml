@@ -28,27 +28,23 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="profile"
+            android:layout_weight="1"
             android:id="@+id/profile"/>
         <Button
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="calendar"
+            android:layout_weight="1"
             android:id="@+id/calendar_btn"/>
         <Button
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="challs"
+            android:layout_weight="1"
             android:id="@+id/challenges"/>
-        <Button
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="editor"
-            android:id="@+id/editor" />
 
     </LinearLayout>
 
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content">
     <com.facebook.drawee.view.SimpleDraweeView
         android:id="@+id/user_photo"
         android:layout_width="match_parent"

@@ -2,6 +2,7 @@ package v.challengeyourself;
 
 import android.content.Context;
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
@@ -9,6 +10,8 @@ import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageView;
+
+import com.facebook.drawee.view.SimpleDraweeView;
 
 import java.io.FileNotFoundException;
 
@@ -19,7 +22,6 @@ import v.challengeyourself.utils.RecyclerDividersDecorator;
 /**
  * Created by AdminPC on 18.11.2016.
  */
-//TODO Отображать фото
 //TODO заменить фон Checkbox или заменить вообще Checkbox
 public class ProfileActivity extends AppCompatActivity {
     EditText nick, first_name, second_name, date_of_birth, city;
@@ -34,6 +36,7 @@ public class ProfileActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_profile);
+
 
         initContentView();
 
@@ -60,24 +63,20 @@ public class ProfileActivity extends AppCompatActivity {
         }
     }
 
-    private void initContentView(){
-        nick =(EditText)findViewById(R.id.nick);
-        first_name = (EditText)findViewById(R.id.first_name);
-        second_name = (EditText)findViewById(R.id.second_name);
-        date_of_birth = (EditText)findViewById(R.id.date_of_birth);
-        city = (EditText)findViewById(R.id.city);
-        user_photo = (ImageView)findViewById(R.id.user_photo);
+    private void initContentView() {
+        first_name = (EditText) findViewById(R.id.first_name);
+        second_name = (EditText) findViewById(R.id.second_name);
+        user_photo = (SimpleDraweeView) findViewById(R.id.photo);
         intent = getIntent();
     }
 
     private void setPrivateInfo() {
-       // nick.setText(intent.getIntExtra("userid"));
         first_name.setText(intent.getStringExtra("fname"));
         second_name.setText(intent.getStringExtra("sname"));
-        date_of_birth.setText(intent.getStringExtra("dateofbirth"));
-        city.setText((intent.getStringExtra("city")));
-       // Log.d("MYLOGS", intent.getStringExtra("city"));
-        //user_photo.setImageBitmap(intent.getStringArrayExtra("usetphoto"));
+        user_photo.setImageURI(Uri.parse(intent.getStringExtra("photo")));
+        //Bundle extras = getIntent().getExtras();
+        //Bitmap bmp = extras.getParcelable("imagebitmap");
+        //user_photo.setImageBitmap(bmp);
     }
 
 }

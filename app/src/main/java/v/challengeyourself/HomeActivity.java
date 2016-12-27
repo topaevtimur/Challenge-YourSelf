@@ -106,6 +106,7 @@ public class HomeActivity extends AppCompatActivity implements LoaderManager.Loa
         progressView = (ProgressBar) findViewById(R.id.progress);
         logoutButton = (Button) findViewById(R.id.logout_button);
         logoutButton.setOnClickListener(logoutClickListener);
+        intentProfile = new Intent(HomeActivity.this, ProfileActivity.class);
 
     }
 
@@ -153,16 +154,17 @@ public class HomeActivity extends AppCompatActivity implements LoaderManager.Loa
     void onCurrentUser(VKApiUserFull currentUser) {
         //TODO передавать все кроме имени и фамилии
         Log.d(TAG, "onCurrentUser: " + currentUser);
-        intentProfile = new Intent(HomeActivity.this, ProfileActivity.class);
-        intentProfile.putExtra("fname", currentUser.first_name);
-        intentProfile.putExtra("sname", currentUser.last_name);
-        intentProfile.putExtra("city", currentUser.city);
-        intentProfile.putExtra("userid", currentUser.getId());
-        intentProfile.putExtra("dateofbirth", currentUser.bdate);
-        //intentProfile.putStringArrayListExtra("photo", toBitmap(currentUser.photo_200));
+          intentProfile.putExtra("fname", currentUser.first_name);
+          intentProfile.putExtra("sname", currentUser.last_name);
         nameView.setText(currentUser.first_name + " " + currentUser.last_name + " " + currentUser.bdate);
         if (!TextUtils.isEmpty(currentUser.photo_max)) {
             imageView.setImageURI(currentUser.photo_max);
+            intentProfile.putExtra("photo", currentUser.photo_max);
+//  Bundle extras = new Bundle();
+//            extras.putParcelable("imagebitmap", image);
+           // extras.putString("fname", currentUser.first_name);
+           // extras.putString("sname", currentUser.last_name);
+       //     intentProfile.putExtras(extras);
         }
         progressView.setVisibility(View.GONE);
     }
@@ -206,6 +208,7 @@ public class HomeActivity extends AppCompatActivity implements LoaderManager.Loa
             final VKApiUserFull currentUser = usersArray == null || usersArray.size() == 0
                     ? null : usersArray.get(0);
             if (currentUser != null) {
+                intentProfile.putExtra("user", currentUser);
                 onCurrentUser(currentUser);
             } else {
                 onCurrentUserError("Empty response");

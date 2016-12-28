@@ -82,7 +82,6 @@ public class FriendsRecycleAdapter extends RecyclerView.Adapter<FriendsRecycleAd
         if(friend != null) {
             friendViewHolder.name.setText(friend.getName());
         }
-
     }
 
     @Override

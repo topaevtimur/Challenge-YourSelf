@@ -9,6 +9,7 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
+import android.widget.Button;
 import android.widget.CalendarView;
 import android.widget.TextView;
 
@@ -35,9 +36,6 @@ public class CalendarActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_calendar);
-
-        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
-        setSupportActionBar(toolbar);
 
         calendar = (CalendarView) findViewById(R.id.calendar);
         calendar.setOnDateChangeListener(new CalendarView.OnDateChangeListener() {
@@ -66,6 +64,33 @@ public class CalendarActivity extends AppCompatActivity {
                 new RecyclerDividersDecorator(getResources().getColor(R.color.colorPrimaryDark)));
 
         setAdapter(Calendar.getInstance().getTime());
+
+        Button profile_btn = (Button) findViewById(R.id.profile_btn_calendar);
+        profile_btn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(CalendarActivity.this, ProfileActivity.class);
+                startActivity(intent);
+            }
+        });
+
+        Button calendar_btn = (Button) findViewById(R.id.home_btn_calendar);
+        calendar_btn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(CalendarActivity.this, HomeActivity.class);
+                startActivity(intent);
+            }
+        });
+
+        Button challenges_btn = (Button) findViewById(R.id.challenges_btn_calendar);
+        challenges_btn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(CalendarActivity.this, ChallengeActivity.class);
+                startActivity(intent);
+            }
+        });
     }
 
     void setAdapter(Date date) {

@@ -72,6 +72,7 @@ public class EditorActivity extends AppCompatActivity {
         getTime = (EditText) findViewById(R.id.get_time);
         getTime.setInputType(InputType.TYPE_NULL);
 
+
         challenge = (EditText) findViewById(R.id.challenge);
         details = (EditText) findViewById(R.id.details);
 
@@ -120,9 +121,9 @@ public class EditorActivity extends AppCompatActivity {
             public void onTimeSet(TimePicker view, int hourOfDay, int minute) {
                 full.set(Calendar.HOUR_OF_DAY, hourOfDay);
                 full.set(Calendar.MINUTE, minute);
-                getTime.setText(hourOfDay + ":" + minute);
+                getTime.setText(hourOfDay + ":" + String.format("%02d", minute));
             }
-        }, ct.get(Calendar.HOUR_OF_DAY), ct.get(Calendar.MINUTE), false);
+        }, ct.get(Calendar.HOUR_OF_DAY), ct.get(Calendar.MINUTE), true);
     }
 
     public void onClickDateTime(View view) {

@@ -71,7 +71,7 @@ public class ChallengeStorage {
                     int pos = 0;
                     result.add(new Challenge(
                             cursor.getInt(pos++),
-                            cursor.getString(pos++),
+                            cursor.getLong(pos++),
                             cursor.getString(pos++),
                             cursor.getString(pos++),
                             cursor.getString(pos++),
@@ -114,7 +114,7 @@ public class ChallengeStorage {
             String request = ") VALUES (?, ?, ?, ?, ?, ?, ?)";
             insert = db.compileStatement(statement + request);
             int pos = 0;
-            insert.bindString(++pos, newch.start);
+            insert.bindLong(++pos, newch.start);
             insert.bindString(++pos, newch.deadDate);
             insert.bindString(++pos, newch.deadTime);
             insert.bindString(++pos, newch.challenge);

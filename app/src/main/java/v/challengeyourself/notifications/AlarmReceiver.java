@@ -22,6 +22,7 @@ public class AlarmReceiver extends BroadcastReceiver {
         String chall = intent.getStringExtra(Constants.CHALL);
         Log.d("RECEIVER", "Gonna make NEW NOTIFICATION");
         if (intent.getIntExtra(Constants.HOTNESS, 1) == 1) {
+
             showNotification(context, "Deadline Notification", "Hey, you gonna have deadline for "  + chall + " in 2 days ");
         } else if (intent.getIntExtra(Constants.HOTNESS, 2) == 2) {
             showNotification(context, "Deadline Notification", "Hurry up! Deadline for " + chall + " is coming");

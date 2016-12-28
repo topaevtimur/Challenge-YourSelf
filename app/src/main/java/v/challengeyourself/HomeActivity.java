@@ -3,7 +3,6 @@ package v.challengeyourself;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
-import android.content.IntentFilter;
 import android.os.Bundle;
 import android.support.v4.app.LoaderManager;
 import android.support.v4.content.Loader;
@@ -70,7 +69,8 @@ public class HomeActivity extends AppCompatActivity implements LoaderManager.Loa
         profile_btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                save();
+                //save();
+                finish();
                 //Intent intent = new Intent(HomeActivity.this, ProfileActivity.class);
                 startActivity(intentProfile);
             }
@@ -152,13 +152,16 @@ public class HomeActivity extends AppCompatActivity implements LoaderManager.Loa
 
     void onCurrentUser(VKApiUserFull currentUser) {
         Log.d(TAG, "onCurrentUser: " + currentUser);
-        intentProfile.putExtra("fname", currentUser.first_name);
-        intentProfile.putExtra("sname", currentUser.last_name);
+//        intentProfile.putExtra("fname", currentUser.first_name);
+//        intentProfile.putExtra("sname", currentUser.last_name);
+        Global.fname = currentUser.first_name;
+        Global.sname = currentUser.last_name;
 
         nameView.setText(currentUser.first_name + " " + currentUser.last_name + " " + currentUser.bdate);
         if (!TextUtils.isEmpty(currentUser.photo_max)) {
             imageView.setImageURI(currentUser.photo_max);
-            intentProfile.putExtra("photo", currentUser.photo_max);
+//            intentProfile.putExtra("photo", currentUser.photo_max);
+            Global.uri = currentUser.photo_max;
         }
         progressView.setVisibility(View.GONE);
     }

@@ -25,36 +25,52 @@ public class FriendsRecycleAdapter extends RecyclerView.Adapter<FriendsRecycleAd
     @NonNull
     private List<User> friends;
 
-    public FriendsRecycleAdapter(Context context) {
+    @NonNull
+    MyOnClickListener listener;
+
+    public FriendsRecycleAdapter(Context context, MyOnClickListener listener) {
         this.context = context;
+        this.listener = listener;
         this.layoutInflater = LayoutInflater.from(context);
     }
+
 
     public void setFriend(List<User> friends){
         this.friends = friends;
         notifyDataSetChanged();
     }
 
-    public static class  FriendViewHolder extends RecyclerView.ViewHolder {
+    public static class  FriendViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
 
         private final TextView name;
+        private MyOnClickListener listener;
 
-        public FriendViewHolder(View itemView) {
+        public FriendViewHolder(View itemView, MyOnClickListener listener) {
             super(itemView);
-            //TODO init
             name = (TextView) itemView.findViewById(R.id.person_name);
+            itemView.setOnClickListener(this);
+            this.listener = listener;
         }
-
+/*
         static FriendViewHolder newInstance(LayoutInflater layoutInflater, ViewGroup parent) {
             final View view = layoutInflater.inflate(R.layout.item_friend, parent, false);
             return new FriendViewHolder(view);
         }
-
+*/
+        @Override
+        public void onClick(View v) {
+            int position = getAdapterPosition();
+            listener.onClick(position);
+        }
     }
+  //  private final View.OnClickListener itemOnClickListener = new MyOnClickListener();
+
+
     @Override
     public FriendViewHolder onCreateViewHolder(ViewGroup viewGroup, int i) {
         View v = LayoutInflater.from(viewGroup.getContext()).inflate(R.layout.item_friend, viewGroup, false);
-        FriendViewHolder pvh = new FriendViewHolder(v);
+        //v.setOnClickListener(itemOnClickListener);
+        FriendViewHolder pvh = new FriendViewHolder(v, listener);
         return pvh;
     }
 

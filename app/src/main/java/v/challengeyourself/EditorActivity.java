@@ -2,6 +2,7 @@ package v.challengeyourself;
 
 import android.app.DatePickerDialog;
 import android.app.TimePickerDialog;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.text.InputType;
@@ -28,7 +29,7 @@ public class EditorActivity extends AppCompatActivity {
     private final String TAG = "NEW CHALLENGE: ";
 
     private EditText getDate, getTime, challenge, details;
-    private Button save;
+    private Button save, share;
 
     private DatePickerDialog datePickerDialog;
     private TimePickerDialog timePickerDialog;
@@ -75,8 +76,19 @@ public class EditorActivity extends AppCompatActivity {
             }
         });
         storage = new ChallengeStorage(getApplicationContext());
-    }
 
+        share = (Button) findViewById(R.id.share);
+        share.setOnClickListener(new View.OnClickListener(){
+
+            @Override
+            public void onClick(View v) {
+                save();
+                Intent intent = new Intent(EditorActivity.this, ShareActivity.class);
+                startActivity(intent);
+            }
+        });
+    }
+    private void save(){}
     private void chooseDateTime() {
         Calendar cd = Calendar.getInstance();
         datePickerDialog = new DatePickerDialog(this, new DatePickerDialog.OnDateSetListener() {

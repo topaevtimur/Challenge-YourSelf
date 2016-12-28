@@ -3,7 +3,6 @@ package v.challengeyourself;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
-import android.content.IntentFilter;
 import android.os.Bundle;
 import android.support.v4.app.LoaderManager;
 import android.support.v4.content.Loader;
@@ -32,12 +31,13 @@ import v.challengeyourself.loader.ResultType;
 import v.challengeyourself.loader.vk.VkApiRequestLoader;
 
 
-
-
 public class HomeActivity extends AppCompatActivity implements LoaderManager.LoaderCallbacks<LoadResult<VKUsersArray, VKError>> {
 
     private BroadcastReceiver dateChanged;
-    void save() {}
+
+    void save() {
+    }
+
     private final String TAG = "myLogs";
 
     private SimpleDraweeView imageView;
@@ -60,7 +60,8 @@ public class HomeActivity extends AppCompatActivity implements LoaderManager.Loa
 
         } else if (savedInstanceState == null) {
             Log.d(TAG, "onCreate: token is missing, performing login...");
-            VKSdk.login(this, VKScopes.PHOTOS);
+            VKSdk.login(this, VKScopes.PHOTOS, VKScopes.FRIENDS, VKScopes.WALL);
+
         }
 
 
@@ -68,7 +69,8 @@ public class HomeActivity extends AppCompatActivity implements LoaderManager.Loa
         profile_btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                save();
+                //save();
+                finish();
                 //Intent intent = new Intent(HomeActivity.this, ProfileActivity.class);
                 startActivity(intentProfile);
             }
@@ -94,6 +96,7 @@ public class HomeActivity extends AppCompatActivity implements LoaderManager.Loa
             }
         });
     }
+
     protected void initContentView() {
         Log.d(TAG, "init");
         setContentView(R.layout.activity_home);
@@ -148,19 +151,17 @@ public class HomeActivity extends AppCompatActivity implements LoaderManager.Loa
 
 
     void onCurrentUser(VKApiUserFull currentUser) {
-        //TODO передавать все кроме имени и фамилии
         Log.d(TAG, "onCurrentUser: " + currentUser);
-          intentProfile.putExtra("fname", currentUser.first_name);
-          intentProfile.putExtra("sname", currentUser.last_name);
+//        intentProfile.putExtra("fname", currentUser.first_name);
+//        intentProfile.putExtra("sname", currentUser.last_name);
+        Global.fname = currentUser.first_name;
+        Global.sname = currentUser.last_name;
+
         nameView.setText(currentUser.first_name + " " + currentUser.last_name + " " + currentUser.bdate);
         if (!TextUtils.isEmpty(currentUser.photo_max)) {
             imageView.setImageURI(currentUser.photo_max);
-            intentProfile.putExtra("photo", currentUser.photo_max);
-//  Bundle extras = new Bundle();
-//            extras.putParcelable("imagebitmap", image);
-           // extras.putString("fname", currentUser.first_name);
-           // extras.putString("sname", currentUser.last_name);
-       //     intentProfile.putExtras(extras);
+//            intentProfile.putExtra("photo", currentUser.photo_max);
+            Global.uri = currentUser.photo_max;
         }
         progressView.setVisibility(View.GONE);
     }
@@ -221,7 +222,7 @@ public class HomeActivity extends AppCompatActivity implements LoaderManager.Loa
     private View.OnClickListener logoutClickListener = new View.OnClickListener() {
         @Override
         public void onClick(View v) {
-            Log.d(TAG,"OnCLICKLOGOUTTTTTTTTTTTT");
+            Log.d(TAG, "OnCLICKLOGOUTTTTTTTTTTTT");
             final Context context = HomeActivity.this;
 
             // Выполняем логаут в Vk SDK

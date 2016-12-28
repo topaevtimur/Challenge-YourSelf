@@ -13,12 +13,6 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
 
-        <!--<activity android:name=".HomeActivity">-->
-            <!--<intent-filter>-->
-                <!--<action android:name="android.intent.action.MAIN" />-->
-                <!--<category android:name="android.intent.category.LAUNCHER" />-->
-            <!--</intent-filter>-->
-        <!--</activity>-->
 
         <activity android:name=".LoginActivity">
             <intent-filter>
@@ -26,33 +20,38 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-
         <activity
-            android:name=".ProfileActivity">
-        </activity>
-        <activity
-            android:name=".CalendarActivity"
-            android:label="@string/title_activity_calendar"
-            android:theme="@style/AppTheme.NoActionBar">
+            android:name=".ProfileActivity"
+            android:label="@string/title_activity_profile">
         </activity>
         <activity
             android:name=".EditorActivity">
         </activity>
-        <receiver android:name=".notifications.AlarmReceiver" android:process=":remote">
-        </receiver>
         <activity
-            android:name=".ChallengeActivity">
+            android:name=".CalendarActivity"
+            android:label="@string/title_activity_calendar">
+        </activity>
+        <activity
+            android:name=".ChallengeActivity"
+            android:label="@string/title_activity_challenge">
         </activity>
         <activity
             android:name="com.vk.sdk.VKServiceActivity"
             android:label="ServiceActivity"
             android:theme="@style/VK.Transparent">
         </activity>
-
         <activity
             android:name=".HomeActivity">
         </activity>
+            
+        <activity android:name=".ShareActivity" >
+          </activity>
 
+
+        <receiver
+            android:name=".notifications.AlarmReceiver" android:process=":remote">
+        </receiver>
     </application>
 
 </manifest>
+

@@ -22,11 +22,12 @@ public class AlarmReceiver extends BroadcastReceiver {
         String chall = intent.getStringExtra(Constants.CHALL);
         Log.d("RECEIVER", "Gonna make NEW NOTIFICATION");
         if (intent.getIntExtra(Constants.HOTNESS, 1) == 1) {
-            showNotification(context, "Deadline Notification", "Осталось 2 дня до " + chall);
+
+            showNotification(context, "Deadline Notification", "Hey, you gonna have deadline for "  + chall + " in 2 days ");
         } else if (intent.getIntExtra(Constants.HOTNESS, 2) == 2) {
-            showNotification(context, "Deadline Notification", "Поторопись! Остался 1 день " + chall);
+            showNotification(context, "Deadline Notification", "Hurry up! Deadline for " + chall + " is coming");
         } else if (intent.getIntExtra(Constants.HOTNESS, 3) == 3) {
-            showNotification(context, "Deadline Notification", "Осталось совсем чуть-чуть " + chall);
+            showNotification(context, "Deadline Notification", "LAST FUCKING NIGHT AS ALWAYS, GOOD LUCK WITH " + chall);
         }
     }
 

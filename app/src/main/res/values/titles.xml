@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="title_activity_calendar">Ваши challenge</string>
+    <string name="title_activity_profile">Ваш профиль</string>
+    <string name="title_activity_challenge">Редактор challenge</string>
+</resources>

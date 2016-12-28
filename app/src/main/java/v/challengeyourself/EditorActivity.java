@@ -24,7 +24,7 @@ import v.challengeyourself.model.Challenge;
 import v.challengeyourself.notifications.AlarmReceiver;
 import v.challengeyourself.storage.ChallengeStorage;
 
-import static v.challengeyourself.Constants.DATE_FORMAT;
+import static v.challengeyourself.Constants.*;
 
 /**
  * Created by penguinni on 27.11.16.
@@ -120,7 +120,8 @@ public class EditorActivity extends AppCompatActivity {
     public void onClickSave() {
         Toast.makeText(getApplicationContext(), "Saving", Toast.LENGTH_SHORT).show();
 
-        String start = DATE_FORMAT.format(new Date());
+        long start = System.currentTimeMillis();
+        //String start = DATE_FORMAT.format(new Date());
         String deadDate = getDate.getText().toString();
         String deadTime = getTime.getText().toString();
         String chall = challenge.getText().toString();
@@ -142,23 +143,28 @@ public class EditorActivity extends AppCompatActivity {
     private void scheduleAlarm(Calendar c, Challenge chall) {
         AlarmManager manager = (AlarmManager) getSystemService(Context.ALARM_SERVICE);
         long deadline = c.getTimeInMillis();
+        long create_time = chall.start;
 
         Intent intent = new Intent(this, AlarmReceiver.class);
         intent.putExtra(Constants.CHALL, chall.challenge);
         PendingIntent pending = PendingIntent.getBroadcast(this, (int) System.currentTimeMillis(), intent, PendingIntent.FLAG_UPDATE_CURRENT);
 
-        Log.d(ALARM, "ALARM IS SET WITHIN 5 SEC");
-        intent.putExtra(Constants.HOTNESS, 1);
-        manager.set(AlarmManager.RTC_WAKEUP, deadline - AlarmManager.INTERVAL_DAY * 2, pending);
+        if (deadline - create_time > AlarmManager.INTERVAL_DAY * 2) {
+            Log.d(ALARM, "ALARM IS SET WITHIN 5 SEC");
+            intent.putExtra(Constants.HOTNESS, 1);
+            manager.set(AlarmManager.RTC_WAKEUP, deadline - AlarmManager.INTERVAL_DAY * 2, pending);
+        }
 
-        Log.d(ALARM, "ALARM IS SET WITHIN 10 SEC");
-        intent.putExtra(Constants.HOTNESS, 2);
-        pending = PendingIntent.getBroadcast(this, (int) System.currentTimeMillis(), intent, 0);
-        manager.set(AlarmManager.RTC_WAKEUP, deadline - AlarmManager.INTERVAL_DAY, pending);
+        if (deadline - create_time > AlarmManager.INTERVAL_DAY) {
+            Log.d(ALARM, "ALARM IS SET WITHIN 10 SEC");
+            intent.putExtra(Constants.HOTNESS, 2);
+            pending = PendingIntent.getBroadcast(this, (int) System.currentTimeMillis(), intent, PendingIntent.FLAG_UPDATE_CURRENT);
+            manager.set(AlarmManager.RTC_WAKEUP, deadline - AlarmManager.INTERVAL_DAY, pending);
+        }
 
         Log.d(ALARM, "ALARM IS SET WITHIN 20 SEC");
         intent.putExtra(Constants.HOTNESS, 3);
-        pending = PendingIntent.getBroadcast(this, (int) System.currentTimeMillis(), intent, 0);
+        pending = PendingIntent.getBroadcast(this, (int) System.currentTimeMillis(), intent, PendingIntent.FLAG_UPDATE_CURRENT);
         manager.set(AlarmManager.RTC_WAKEUP, deadline - AlarmManager.INTERVAL_HALF_DAY, pending);
     }
 

@@ -9,8 +9,8 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.widget.Button;
-import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.TextView;
 
 import com.facebook.drawee.view.SimpleDraweeView;
 
@@ -25,7 +25,7 @@ import v.challengeyourself.utils.RecyclerDividersDecorator;
  */
 //TODO заменить фон Checkbox или заменить вообще Checkbox
 public class ProfileActivity extends AppCompatActivity {
-    EditText nick, first_name, second_name, date_of_birth, city;
+    TextView nick, first_name, second_name, date_of_birth, city;
     ImageView user_photo;
     private static final String TAG = "myLogs";
     private RecyclerView challengesRecyclerView;
@@ -90,16 +90,20 @@ public class ProfileActivity extends AppCompatActivity {
     }
 
     private void initContentView() {
-        first_name = (EditText) findViewById(R.id.first_name);
-        second_name = (EditText) findViewById(R.id.second_name);
+        first_name = (TextView) findViewById(R.id.first_name);
+        second_name = (TextView) findViewById(R.id.second_name);
         user_photo = (SimpleDraweeView) findViewById(R.id.photo);
-        intent = getIntent();
+        //intent = getIntent();
     }
 
     private void setPrivateInfo() {
-        first_name.setText(intent.getStringExtra("fname"));
-        second_name.setText(intent.getStringExtra("sname"));
-        user_photo.setImageURI(Uri.parse(intent.getStringExtra("photo")));
+//        first_name.setText(intent.getStringExtra("fname"));
+//        second_name.setText(intent.getStringExtra("sname"));
+//        user_photo.setImageURI(Uri.parse(intent.getStringExtra("photo")));
+        first_name.setText(Global.fname);
+        second_name.setText(Global.sname);
+        user_photo.setImageURI(Uri.parse(Global.uri));
+
         //Bundle extras = getIntent().getExtras();
         //Bitmap bmp = extras.getParcelable("imagebitmap");
         //user_photo.setImageBitmap(bmp);

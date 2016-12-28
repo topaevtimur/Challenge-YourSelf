@@ -27,7 +27,6 @@ import com.vk.sdk.api.model.VKApiUserFull;
 import com.vk.sdk.api.model.VKScopes;
 import com.vk.sdk.api.model.VKUsersArray;
 
-import v.challengeyourself.closing.DeadLineFuckUpReciever;
 import v.challengeyourself.loader.LoadResult;
 import v.challengeyourself.loader.ResultType;
 import v.challengeyourself.loader.vk.VkApiRequestLoader;
@@ -96,9 +95,6 @@ public class HomeActivity extends AppCompatActivity implements LoaderManager.Loa
                 startActivity(intent);
             }
         });
-        dateChanged = new DeadLineFuckUpReciever();
-        //TODO СОБЫТИЕ ДЛЯ РЕСИВЕРА ПОКА ТАКОЕ, НАДО ПОМЕНЯТЬ НА ON_DATA_CHANGED, НО ОНА РАБОТАЕТ ЧЕРЕЗ РАЗ И ТЕСТИТЬ НЕУДОБНО
-        registerReceiver(dateChanged, new IntentFilter(Intent.ACTION_SCREEN_OFF));
     }
 
     protected void initContentView() {

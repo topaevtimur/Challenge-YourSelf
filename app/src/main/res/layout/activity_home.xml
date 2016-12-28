@@ -4,7 +4,6 @@
     android:id="@+id/activity_home"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:paddingBottom="@dimen/activity_vertical_margin"
     android:paddingLeft="@dimen/activity_horizontal_margin"
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
@@ -12,38 +11,10 @@
 
 
     <!--<ImageView-->
-        <!--android:layout_width="100dp"-->
-        <!--android:layout_height="100dp"-->
-        <!--android:id="@+id/photo"-->
-        <!--android:layout_alignParentStart="true"/>-->
-
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:id="@+id/buttons"
-        android:orientation="horizontal"
-        android:layout_alignParentBottom="true"
-        >
-        <Button
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="profile"
-            android:layout_weight="1"
-            android:id="@+id/profile"/>
-        <Button
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="calendar"
-            android:layout_weight="1"
-            android:id="@+id/calendar_btn"/>
-        <Button
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="challs"
-            android:layout_weight="1"
-            android:id="@+id/challenges"/>
-
-    </LinearLayout>
+    <!--android:layout_width="100dp"-->
+    <!--android:layout_height="100dp"-->
+    <!--android:id="@+id/photo"-->
+    <!--android:layout_alignParentStart="true"/>-->
 
     <com.facebook.drawee.view.SimpleDraweeView
         android:id="@+id/user_photo"
@@ -82,5 +53,32 @@
         android:layout_below="@+id/user_name"
         android:layout_centerHorizontal="true" />
 
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:id="@+id/buttons"
+        android:orientation="horizontal"
+        android:layout_alignParentBottom="true">
 
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="profile"
+            android:layout_weight="1"
+            android:id="@+id/profile"/>
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="calendar"
+            android:layout_weight="1"
+            android:id="@+id/calendar_btn"/>
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="challs"
+            android:layout_weight="1"
+            android:id="@+id/challenges"/>
+
+    </LinearLayout>
 </RelativeLayout>

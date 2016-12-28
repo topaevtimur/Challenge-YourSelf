@@ -8,6 +8,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.Spinner;
 import android.widget.TextView;
@@ -38,6 +39,34 @@ public class ChallengeActivity extends AppCompatActivity {
 
         Spinner defaultSpinner = (Spinner) findViewById(R.id.category_default);
         setSpinner(defaultSpinner, R.array.default_offers, R.string.category_default);
+
+
+        Button profile_btn = (Button) findViewById(R.id.home_btn_challenge);
+        profile_btn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(ChallengeActivity.this, HomeActivity.class);
+                startActivity(intent);
+            }
+        });
+
+        Button calendar_btn = (Button) findViewById(R.id.calendar_btn_challenge);
+        calendar_btn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(ChallengeActivity.this, CalendarActivity.class);
+                startActivity(intent);
+            }
+        });
+
+        Button challenges_btn = (Button) findViewById(R.id.profile_btn_challenge);
+        challenges_btn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(ChallengeActivity.this, ProfileActivity.class);
+                startActivity(intent);
+            }
+        });
     }
 
     void setSpinner(final Spinner spinner, final int resourceID, final int nameID) {

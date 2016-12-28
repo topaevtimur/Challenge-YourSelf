@@ -1,13 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:orientation="vertical" android:layout_width="match_parent"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:layout_weight="5"
     android:paddingTop="16dp"
-    android:paddingBottom="16dp"
     android:paddingLeft="20dp"
     android:paddingRight="20dp">
-
 
     <TextView
         android:layout_width="wrap_content"
@@ -34,17 +33,11 @@
         android:typeface="normal"
         android:fontFamily="sans-serif" />
 
-
-
-
-
-
     <EditText
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:id="@+id/first_name"
         android:text="first_name"
-        android:layout_below="@+id/nick"
         android:layout_toEndOf="@+id/photo"
         android:layout_marginLeft="10dp"
         android:layout_marginTop="15dp"
@@ -55,9 +48,6 @@
         android:focusable="false"
         android:longClickable="false"
         android:cursorVisible="false"/>
-
-
-
 
     <EditText
         android:layout_width="wrap_content"
@@ -74,10 +64,6 @@
         android:focusable="false"
         android:longClickable="false"
         android:cursorVisible="false"/>
-
-
-
-
 
     <com.facebook.drawee.view.SimpleDraweeView
         android:id="@+id/photo"
@@ -108,5 +94,32 @@
         android:fontFamily="monospace"
         android:textColor="@color/colorPrimaryDark" />
 
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/buttons"
+        android:orientation="horizontal"
+        android:layout_alignParentBottom="true">
+
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="home"
+            android:layout_weight="1"
+            android:id="@+id/home_btn_profile"/>
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="calendar"
+            android:layout_weight="1"
+            android:id="@+id/calendar_btn_profile"/>
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="challs"
+            android:layout_weight="1"
+            android:id="@+id/challenges_btn_profile"/>
+
+    </LinearLayout>
 
 </RelativeLayout>

@@ -8,6 +8,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 
@@ -36,8 +37,6 @@ public class ProfileActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_profile);
-
-
         initContentView();
 
         setPrivateInfo();
@@ -48,6 +47,33 @@ public class ProfileActivity extends AppCompatActivity {
 
         setAdapter();
 
+
+        Button profile_btn = (Button) findViewById(R.id.home_btn_profile);
+        profile_btn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(ProfileActivity.this, HomeActivity.class);
+                startActivity(intent);
+            }
+        });
+
+        Button calendar_btn = (Button) findViewById(R.id.calendar_btn_profile);
+        calendar_btn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(ProfileActivity.this, CalendarActivity.class);
+                startActivity(intent);
+            }
+        });
+
+        Button challenges_btn = (Button) findViewById(R.id.challenges_btn_profile);
+        challenges_btn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(ProfileActivity.this, ChallengeActivity.class);
+                startActivity(intent);
+            }
+        });
     }
 
     private void setAdapter() {

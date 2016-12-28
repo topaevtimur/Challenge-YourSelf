@@ -90,7 +90,10 @@ public class EditorActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 save();
+
                 Intent intent = new Intent(EditorActivity.this, ShareActivity.class);
+                intent.putExtra("chal", details.getEditableText().toString());
+                Log.d("mylogs", String.valueOf(challenge.getText()));
                 startActivity(intent);
             }
         });
